@@ -20,7 +20,7 @@ const handleErrors = require('./middelwares/handleErrors')
 
 const api = process.env.API_URL // get enviroment variables
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 const app = express() // init app with express
 
 
@@ -38,7 +38,7 @@ app.use( `${api}/products`, productRoute )
 app.use( `${api}/categories`, categoryRoute )
 app.use( `${api}/orders`, ordersRoute )
 app.use( `${api}/users`, usersRoute )
-app.use('/public/uploads', express.static(__dirname + '/public/uploads'))
+app.use('public/uploads', express.static(__dirname + '/public/uploads'))
 
 app.get('/', (req,res) => {
     res.send("<h1> Hello Server </h1>")
