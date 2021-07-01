@@ -49,6 +49,8 @@ app.use ( notFound )
 app.use( handleErrors )
 
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log("server started")
 })
+
+module.exports = {app, server}

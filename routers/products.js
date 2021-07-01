@@ -11,10 +11,12 @@ const upload = multer({storage : storage})
 router.get(`/`, (req , res, next) => {
 
     // /products?aval=true
-    const { category } = req.query
+    const { category, count } = req.query
+    const limit = count ? Number(count) : 0
     const filter = category ? { category : category.split(',') } : {}
 
     const products = Product.find( filter )
+    .limit(limit)
     .then(result => {
         res.status(200).json(result)
     }).catch( next )
