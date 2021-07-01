@@ -4,7 +4,7 @@ const {CONECTION_STRING , CONECTION_STRING_PRODUCTION, NODE_ENV} = process.env
 
 const connStr = NODE_ENV === 'test' 
     ? process.env.CONECTION_STRING
-    : process.env.CONECTION_STRING_PODUCTION
+    : process.env.CONECTION_STRING_PODUCTION // se agrego el production
 
 console.log(connStr)
 
