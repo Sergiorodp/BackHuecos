@@ -15,6 +15,7 @@ const newFilename = file => {
     .replace('.jpg','')
     .replace('.jpeg','')
     .replace('.png','')
+    .replace('.PNG','')
     return `${newName}-${Date.now()}.${type}`
 }
 

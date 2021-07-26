@@ -48,7 +48,7 @@ router.get(`/:id`, (req, res, next) =>{
 
 })
 
-router.post(`/`, (req,res,next) => {
+router.post(`/`, (req, res, next) => {
 
     const newOrder = req.body
 
@@ -120,7 +120,7 @@ router.post(`/`, (req,res,next) => {
 
 })
 
-router.put('/:id', (req,res,next) => {
+router.put('/:id', (req, res, next) => {
 
     const newOrder = req.body
     const { id } = req.params
@@ -140,7 +140,7 @@ router.put('/:id', (req,res,next) => {
 
 })
 
-router.delete('/:id', (req,res,next) => {
+router.delete('/  :id', (req, res, next) => {
 
     const newOrder = req.body
     const { id } = req.params
@@ -187,7 +187,6 @@ router.get('/get/totalsales' , (req, res, next) => {
     }).catch( next )
 })
 
-
 router.get(`/get/userorders/:id`, (req, res, next) =>{
 
     const { id } = req.params
@@ -205,4 +204,5 @@ router.get(`/get/userorders/:id`, (req, res, next) =>{
     .catch( next )
 
 })
+
 module.exports = router

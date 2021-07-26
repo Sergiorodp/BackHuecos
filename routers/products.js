@@ -28,11 +28,11 @@ router.post(`/`, upload.single('image'), async (req,res,next) => {
     const newProd = req.body
     const reqImage = req.file
 
-    const pathImg = `${req.protocol}://${req.hostname}/public/uploads`
+    const pathImg = `${req.protocol}://${req.hostname}/uploads`
 
     const categoryFound = await Category.findById(newProd.category)
 
-    if(!reqImage)return res.status(400).json({
+    if(!reqImage) return res.status(400).json({
         result : 'No Image Found',
         success : false
     })

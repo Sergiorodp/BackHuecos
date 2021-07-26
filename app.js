@@ -38,7 +38,8 @@ app.use( `${api}/products`, productRoute )
 app.use( `${api}/categories`, categoryRoute )
 app.use( `${api}/orders`, ordersRoute )
 app.use( `${api}/users`, usersRoute )
-app.use('public/uploads', express.static(__dirname + '/public/uploads'))
+// app.use('public/uploads', express.static(__dirname + '/public/uploads'))
+app.use(express.static('public'))
 
 app.get('/', (req,res) => {
     res.send("<h1> Hello Server </h1>")
