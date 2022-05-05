@@ -16,9 +16,7 @@ module.exports = (error, req, res, next) => {
             })
             break
         case 'UnauthorizedError' : 
-            return res.status(401).json({
-                error: error.message
-            })
+            return res.writeHead( 301, { Location : `http://localhost:3001/api/v1/products`}).end()
             break       
         default :
             res.status(500).end()
