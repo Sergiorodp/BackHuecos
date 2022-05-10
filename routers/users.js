@@ -1,7 +1,6 @@
 const { Router } = require('express')
 const User = require('../modules/user')
 const bcrypt = require('bcryptjs') // npm install bcryptjs
-const { token } = require('morgan')
 const jwt = require('jsonwebtoken')
 
 const router = Router()
@@ -71,9 +70,12 @@ router.post('/login' , (req,res,next) => {
         { 
 
             const token = jwt.sign({
+
                 userId : result.id,
                 isAdmin : result.isAdmin,
-                id : result.id
+                id : result.id,
+                fechaCreat : new Date()
+                
             },secret,
             {expiresIn : '1d'})
 

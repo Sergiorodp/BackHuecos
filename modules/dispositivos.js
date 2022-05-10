@@ -28,5 +28,5 @@ dispositivoSchema.set('toJSON',{
         }
     })
 
-const User = model('User', dispositivoSchema)
-module.exports = User
+const Dispositivo = model('dispositivo', dispositivoSchema)
+module.exports = Dispositivo

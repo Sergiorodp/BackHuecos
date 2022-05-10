@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose')
 
-const deteccionSchema = Schema({
+const DeteccionSchema = Schema({
     velocidad:{
         type : Number,
         required : true
@@ -16,20 +16,20 @@ const deteccionSchema = Schema({
     usuario: {
         type : Schema.Types.ObjectId,
         ref: 'users',
-        require : true
+        required : true
     },
     hueco: {
         type : Schema.Types.ObjectId,
         ref : 'hueco',
-        require : true
+        required : true
     },
     tipoDetect : {
-        typeof: Number,
-        require: true
+        type: Number,
+        required: true
     }
 })
 
-deteccionSchema.set('toJSON',{ 
+DeteccionSchema.set('toJSON',{ 
     transform : (document, returnedObject) => {
             returnedObject.id = returnedObject._id
             delete returnedObject._id
@@ -37,5 +37,5 @@ deteccionSchema.set('toJSON',{
         }
     })
 
-const User = model('User', deteccionSchema)
-module.exports = User
+const Deteccion = model('deteccion', DeteccionSchema)
+module.exports = Deteccion

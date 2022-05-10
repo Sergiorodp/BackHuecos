@@ -11,12 +11,13 @@ const cors = require('cors') // enlazar backend con frontend en diferentes puert
 const authJwt = require('./middelwares/jwt')
 
 // routes
-const productRoute = require('./routers/products')
-const categoryRoute = require('./routers/categories')
-const ordersRoute = require('./routers/orders')
-const usersRoute = require('./routers/users')
+
 const notFound = require('./middelwares/notFound')
 const handleErrors = require('./middelwares/handleErrors')
+
+const deteccionRoute = require('./routers/deteccion')
+const usersRoute = require('./routers/users')
+const huecoRoute = require('./routers/hueco')
 
 const api = process.env.API_URL // get enviroment variables
 
@@ -34,15 +35,15 @@ app.use(morgan('tiny'))
 
 app.use(authJwt())
 
-app.use( `${api}/products`, productRoute )
-app.use( `${api}/categories`, categoryRoute )
-app.use( `${api}/orders`, ordersRoute )
 app.use( `${api}/users`, usersRoute )
+app.use(`${api}/deteccion`, deteccionRoute)
+app.use(`${api}/hueco`, huecoRoute)
+
 // app.use('public/uploads', express.static(__dirname + '/public/uploads'))
 app.use(express.static('public'))
 
 app.get('/', (req,res) => {
-    res.send("<h1> Hello Server </h1>")
+    res.send("<h1> Hello Server Huecos</h1>")
 }) 
 
 // ** Middelware manejar los errores

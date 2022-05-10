@@ -32,5 +32,5 @@ huecoSchema.set('toJSON',{
         }
     })
 
-const User = model('User', huecoSchema)
-module.exports = User
+const Hueco = model('hueco', huecoSchema)
+module.exports = Hueco

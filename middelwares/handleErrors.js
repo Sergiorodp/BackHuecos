@@ -1,3 +1,7 @@
+require('dotenv/config') // npm install dotenv
+
+const api = process.env.API_URL // get enviroment variables
+
 module.exports = (error, req, res, next) => {
 
     console.error(error)
@@ -16,7 +20,7 @@ module.exports = (error, req, res, next) => {
             })
             break
         case 'UnauthorizedError' : 
-            return res.writeHead( 301, { Location : `http://localhost:3001/api/v1/products`}).end()
+            return res.writeHead( 301, { Location : `http://localhost:3001${api}/huecos`}).end()
             break       
         default :
             res.status(500).end()
