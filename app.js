@@ -5,10 +5,10 @@ const morgan = require('morgan')
 require('./mongoose') // Ejecuta todo el modulo
 const { response }  = express
 const cors = require('cors') // enlazar backend con frontend en diferentes puertos
-
+const jwt  = require("express-jwt")
 
 // express-jwt
-const authJwt = require('./middelwares/jwt')
+const { authJwt, authJwtClient }= require('./middelwares/jwt')
 
 // routes
 
@@ -18,6 +18,7 @@ const handleErrors = require('./middelwares/handleErrors')
 const deteccionRoute = require('./routers/deteccion')
 const usersRoute = require('./routers/users')
 const huecoRoute = require('./routers/hueco')
+const dispositivoRoute = require('./routers/dispositivo')
 
 const api = process.env.API_URL // get enviroment variables
 
@@ -33,11 +34,13 @@ app.options('*',cors()) // todas la peticiones http puedenvenir de cualquier ser
 app.use(express.json())
 app.use(morgan('tiny'))
 
+
 app.use(authJwt())
 
 app.use( `${api}/users`, usersRoute )
-app.use(`${api}/deteccion`, deteccionRoute)
+app.use(`${api}/deteccion`, jwt({ secret: process.env.SecretSign, algorithms: ["HS256"] }) , deteccionRoute)
 app.use(`${api}/hueco`, huecoRoute)
+app.use(`${api}/dispositivo`, dispositivoRoute)
 
 // app.use('public/uploads', express.static(__dirname + '/public/uploads'))
 app.use(express.static('public'))

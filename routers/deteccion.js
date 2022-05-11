@@ -2,6 +2,7 @@ const { Router } = require('express')
 const Deteccion = require('../modules/deteccion')
 const Hueco = require('../modules/hueco')
 const User = require('../modules/user')
+const jwt  = require("express-jwt")
 
 const router = Router()
 

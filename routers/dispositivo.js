@@ -27,10 +27,9 @@ dispositivo.get('/:id', (req, res, next) => {
 
 })
 
-dispositivo.post('/', (req, res, next) => {
+dispositivo.post('/', async (req, res, next) => {
 
     const deteccion = req.body
-    const hueco = deteccion.hueco
 
     const userFound = await User.findById(deteccion.usuario)
 
@@ -42,7 +41,7 @@ dispositivo.post('/', (req, res, next) => {
         })
     }
 
-    const newHueco = new Hueco({
+    const newDispositivo = new Dispositivo({
         latitud: hueco.latitud,
         longitud: hueco.longitud,
         Image: hueco.Image,
@@ -50,26 +49,12 @@ dispositivo.post('/', (req, res, next) => {
     })
 
    
-    newHueco.save()
-    .then( hueco => {
-
-        console.log(hueco)
-
-        const newDeteccion = new Deteccion({
-            velocidad: deteccion.velocidad,
-            aceleracion: deteccion.aceleracion,
-            usuario: deteccion.usuario,
-            hueco: hueco._id,
-            tipoDetect : deteccion.tipoDetect
-        })
-
-        newDeteccion.save()
-        .then(createdDeteccion => {
-            res.status(201).json({ result : createdDeteccion,
-            success : true
-            })
-        })
-        .catch( next )
+    newDispositivo.save()
+    .then( dispositivo => {
+        console.log(dispositivo)
     })
+    .catch( next )
 
 })
+
+module.exports = dispositivo
