@@ -3,7 +3,7 @@ const { model, Schema } = require('mongoose')
 
 const tokenSchema = Schema({
     token:{
-        type : Number,
+        type : String,
         required : true
     },
     isValid: {

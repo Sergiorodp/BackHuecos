@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const User = require('../modules/user')
+const Token = require('../modules/token')
 const bcrypt = require('bcryptjs') // npm install bcryptjs
 const jwt = require('jsonwebtoken')
 
@@ -86,6 +87,15 @@ router.post('/login' , (req,res,next) => {
                 
             },secret,
             {expiresIn : '1d'})
+
+            const newToken = new Token({
+                token,
+                isValid: true,
+                fechaCreacion: new Date(),
+                usuario: result.id
+            })
+
+            newToken.save()
 
             result.passwordHash = ''
 
