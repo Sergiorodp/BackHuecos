@@ -36,12 +36,21 @@ router.post('/register', (req,res,next) => {
 
 })
 
-router.get(`/:id`, (req,res,next) => {
+router.get('/get/bytkn', (req,res, next) => {
 
-    const { id } = req.params
-    User.findById(id)
+    const { token = '' } = req.body
+    const { id = 0 } = jwt.decode(token) ? jwt.decode(token) : { id : 0}
+
+    if( id === 0 ){
+        res.status(404).json({
+            result : '',
+            success : false
+        })
+    }
+
+    User.findById( id )
     .select('-passwordHash')
-    .then( user=> {
+    .then( user => {
 
         if( user === null) {
             res.status(404).json({
@@ -71,7 +80,6 @@ router.post('/login' , (req,res,next) => {
 
             const token = jwt.sign({
 
-                userId : result.id,
                 isAdmin : result.isAdmin,
                 id : result.id,
                 fechaCreat : new Date()
@@ -79,8 +87,10 @@ router.post('/login' , (req,res,next) => {
             },secret,
             {expiresIn : '1d'})
 
+            result.passwordHash = ''
+
             res.status(200).json({
-            result : {user : result.email, 
+            result : {user : result, 
                     token : token},
             success : true}) 
         } 
@@ -117,6 +127,27 @@ router.delete(`/:id`, (req,res,next) => {
         else res.status(204).json({ User : 'No Found', success : false })
         
     }).catch( next )
+})
+
+router.get(`/:id`, (req,res,next) => {
+
+    const { id } = req.params
+    User.findById(id)
+    .select('-passwordHash')
+    .then( user=> {
+
+        if( user === null) {
+            res.status(404).json({
+                result : 'No Found',
+                success : false
+            })
+        }else{
+            res.status(200).json({ result : user ,
+            success : true})
+        }
+
+    })
+    .catch( next )
 })
 
 
