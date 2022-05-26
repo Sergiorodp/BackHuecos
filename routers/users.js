@@ -39,14 +39,20 @@ router.post('/register', (req,res,next) => {
 
 router.get('/get/bytkn', (req,res, next) => {
 
-    const { token = '' } = req.body
-    const { id = 0 } = jwt.decode(token) ? jwt.decode(token) : { id : 0}
+    const { token = '' } = req.query
 
-    if( id === 0 ){
+    console.log(token)
+
+    console.log( jwt.decode(token) )
+
+    const { id = 0 } =  jwt.decode(token) 
+
+
+    if ( id === 0){
         res.status(404).json({
             result : '',
             success : false
-        })
+    })
     }
 
     User.findById( id )
@@ -59,7 +65,9 @@ router.get('/get/bytkn', (req,res, next) => {
                 success : false
             })
         }else{
-            res.status(200).json({ result : user ,
+            res.status(200).json({ 
+                result : {user : user, 
+                            token : token} ,
             success : true})
         }
 
