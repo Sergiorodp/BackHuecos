@@ -1,15 +1,13 @@
-const { Server } = require("socket.io")
+const getApiAndEmit = io => {
+    const response = new Date()
 
-module.exports = function createIo( server_socket ){
+    const res = [response.getDate(), response.getHours(), response.getSeconds()]
 
-    const io = new Server(server_socket);
+    // Emitting a new message. Will be consumed by the client
+    io.emit("FromAPI", res)
+  };
 
-    io.on('connection', (socket) => {
-        console.log('a user connected');
-        socket.on('disconnect', () => {
-            console.log('user disconnected');
-          });
-      });
+module.exports = getApiAndEmit
 
-} 
+
 

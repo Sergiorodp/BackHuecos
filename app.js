@@ -6,17 +6,13 @@ require('./mongoose') // Ejecuta todo el modulo
 const { response }  = express
 const cors = require('cors') // enlazar backend con frontend en diferentes puertos
 const jwt  = require("express-jwt")
-const createIo = require('./scoketIo/socketio')
+const getApiAndEmit = require('./scoketIo/socketio')
+const sio = require("socket.io")
 
 
 // create app
 const PORT = process.env.PORT || 3001
 const app = express() // init app with express
-
-// webSocket
-const http = require('http');
-const server_socket = http.createServer(app)
-createIo(server_socket)
 
 // express-jwt
 const { authJwt, authJwtClient }= require('./middelwares/jwt')
@@ -35,7 +31,6 @@ const api = process.env.API_URL // get enviroment variables
 
 
 // Middleware
-
 app.use(cors())
 app.options('*',cors()) // todas la peticiones http puedenvenir de cualquier servidor
 
@@ -61,9 +56,26 @@ app.get('/', (req,res) => {
 app.use ( notFound )
 app.use( handleErrors )
 
-
-const server = app.listen(PORT, () => {
-    console.log("server started")
+const server_sio = app.listen(PORT, ()=>{
+    console.log( `servidor iniciado en ${ PORT }` )
 })
 
-module.exports = {app, server}
+const io = sio(server_sio, {
+    cors: {
+        origin: '*'
+    }
+});
+
+io.on('connection', (socket) => {
+
+    console.log('a user connected');
+
+    interval = setInterval(() => getApiAndEmit(io), 3000)
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+      });
+  });
+
+
+module.exports = {app, server_sio}

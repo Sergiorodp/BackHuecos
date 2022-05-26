@@ -20,7 +20,7 @@ module.exports = (error, req, res, next) => {
             })
             break
         case 'UnauthorizedError' : 
-            return res.writeHead( 301, { Location : `http://localhost:3001${api}/huecos`}).end()
+            res.writeHead( 301, { Location : `http://localhost:3001${api}/hueco`}).end()
             break       
         default :
             res.status(500).end()
