@@ -6,6 +6,17 @@ require('./mongoose') // Ejecuta todo el modulo
 const { response }  = express
 const cors = require('cors') // enlazar backend con frontend en diferentes puertos
 const jwt  = require("express-jwt")
+const createIo = require('./scoketIo/socketio')
+
+
+// create app
+const PORT = process.env.PORT || 3001
+const app = express() // init app with express
+
+// webSocket
+const http = require('http');
+const server_socket = http.createServer(app)
+createIo(server_socket)
 
 // express-jwt
 const { authJwt, authJwtClient }= require('./middelwares/jwt')
@@ -21,9 +32,6 @@ const huecoRoute = require('./routers/hueco')
 const dispositivoRoute = require('./routers/dispositivo')
 
 const api = process.env.API_URL // get enviroment variables
-
-const PORT = process.env.PORT || 3001
-const app = express() // init app with express
 
 
 // Middleware
