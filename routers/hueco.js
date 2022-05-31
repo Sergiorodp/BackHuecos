@@ -9,6 +9,7 @@ router.get('/', (req, res, next) => {
 
     const detecciones = Hueco.find({})
     .select('-usuario')
+    .sort({fechaCreacion: -1})
     .then(result => {
         res.status(200).json(result)
     })
