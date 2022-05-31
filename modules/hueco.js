@@ -9,9 +9,9 @@ const huecoSchema = Schema({
         type : Number,
         required : true
     },
-    Image: {
-        type: String,
-        require: true
+    image: {
+        public_id: String,
+        url: String
     },
     fechaCreacion: {
         type : Date,

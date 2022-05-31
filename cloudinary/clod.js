@@ -13,4 +13,8 @@ const uploadImage = async ( filepath ) => {
     })
 }   
 
-module.exports = { uploadImage }
+const deleteImage = async (public_id) => {
+    return await v2.uploader.destroy(public_id)
+}
+
+module.exports = { uploadImage, deleteImage }
