@@ -8,7 +8,7 @@ const cors = require('cors') // enlazar backend con frontend en diferentes puert
 const jwt  = require("express-jwt")
 const getApiAndEmit = require('./scoketIo/socketio')
 const sio = require("socket.io")
-
+const fileUpload = require('express-fileupload')
 
 // create app
 const PORT = process.env.PORT || 3001
@@ -37,6 +37,10 @@ app.options('*',cors()) // todas la peticiones http puedenvenir de cualquier ser
 app.use(express.json())
 app.use(morgan('tiny'))
 
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir: './uploads'
+}))
 
 app.use(authJwt())
 

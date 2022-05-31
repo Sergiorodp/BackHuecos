@@ -2,13 +2,19 @@ const { Router } = require('express')
 const Deteccion = require('../modules/deteccion')
 const Hueco = require('../modules/hueco')
 const User = require('../modules/user')
+const cloudFiles = require('../cloudinary/clod')
 
 const router = Router()
 
 router.get('/', (req, res, next) =>{
     const detecciones = Deteccion.find({})
+    .limit(10)
+    .populate('hueco')
     .then(result => {
-        res.status(200).json(result)
+        res.status(200).json({
+            success : true,
+            data: result
+        })
     })
     .catch( next )
 })
@@ -50,11 +56,15 @@ router.post(`/`, async (req, res, next) => {
     }
 
     const newHueco = new Hueco({
-        latitud: hueco.latitud,
-        longitud: hueco.longitud,
-        Image: hueco.Image,
+        latitud: deteccion.latitud,
+        longitud: deteccion.longitud,
+        Image: deteccion.Image,
         usuario: deteccion.usuario
     })
+
+    if(req.files?.image){
+        const res = cloudFiles.uploadImage(req.files.image.tempFilePath)
+    }
 
    
     newHueco.save()
@@ -79,6 +89,38 @@ router.post(`/`, async (req, res, next) => {
         .catch( next )
     })
 
+})
+
+router.delete('/:id',async (req, res, next) => {
+    
+    const { id } = req.params
+
+    try{
+
+        const deteccion = await Deteccion.findById(id)
+        const deletHueco = await Hueco.findByIdAndDelete(deteccion.hueco)
+        const deleteDeteccion = await Deteccion.findByIdAndDelete(id)
+
+        if( !deleteDeteccion || !deletHueco){
+
+            res.status(404).json({
+                success:false,
+                data:[]
+            })
+        }else{
+            res.status(200).json({
+                success:true,
+                data:[{
+                    hueco : deletHueco,
+                    deteccion : deleteDeteccion
+                }]
+            })
+        }
+
+    }catch( e ){
+        next
+    }
+    
 })
 
 module.exports = router
