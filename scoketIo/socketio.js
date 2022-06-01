@@ -24,10 +24,18 @@ const getPosition = (io) =>{
     
     lat += 0.0001
     lon += 0.0001
+
+    if(lat > 5 || lon > -73){
+      lat = 4.6948781;
+      lon = -74.1146918;
+    }
+
     let payload = {
         'lat' : lat,
         'lon' : lon
     }
+
+
 
     io.emit('prueba', payload)
 }
