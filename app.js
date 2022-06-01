@@ -6,7 +6,7 @@ require('./mongoose') // Ejecuta todo el modulo
 const { response }  = express
 const cors = require('cors') // enlazar backend con frontend en diferentes puertos
 const jwt  = require("express-jwt")
-const getApiAndEmit = require('./scoketIo/socketio')
+const controllersSocket = require('./scoketIo/socketio')
 const sio = require("socket.io")
 
 // create app
@@ -68,7 +68,9 @@ io.on('connection', (socket) => {
 
     console.log('a user connected');
 
-    interval = setInterval(() => getApiAndEmit(io), 3000)
+
+    const interval = setInterval(() => controllersSocket.getApiAndEmit(io), 3000)
+    const example2 = setInterval(() => controllersSocket.getPosition(io),3000)
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
