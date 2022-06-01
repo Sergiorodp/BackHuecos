@@ -1,3 +1,4 @@
+
 const getApiAndEmit = io => {
     const response = new Date()
 
@@ -16,7 +17,22 @@ const getApiAndEmit = io => {
     io.emit("FromAPI", res)
   };
 
-module.exports = getApiAndEmit
+  var lat = 4.6948781;
+  var lon = -74.1146918;
+
+const getPosition = (io) =>{
+    
+    lat += 0.0001
+    lon += 0.0001
+    let payload = {
+        'lat' : lat,
+        'lon' : lon
+    }
+
+    io.emit('prueba', payload)
+}
+
+module.exports = {getApiAndEmit, getPosition}
 
 
 
