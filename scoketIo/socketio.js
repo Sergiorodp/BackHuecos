@@ -11,7 +11,7 @@ const getApiAndEmit = io => {
       value : (Math.random() * (30 - 1) + 1).toFixed(2)
     },{
       name : 'tiempo',
-      value : response.getSeconds()
+      value : `${response.getHours()-5}:${response.getMinutes()}`
     }]
 
     // Emitting a new message. Will be consumed by the client
