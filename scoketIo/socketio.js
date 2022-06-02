@@ -1,4 +1,6 @@
 
+let saveData = []
+
 const getApiAndEmit = io => {
 
     const response = new Date()
@@ -14,9 +16,19 @@ const getApiAndEmit = io => {
       value : `${response.getHours()-5}:${response.getMinutes()}`
     }]
 
+    if( saveData.length < 20){
+      saveData.push(res)
+    }else{
+      saveData.shift()
+      saveData.push(res)
+    }
     // Emitting a new message. Will be consumed by the client
     io.emit("FromAPI", res)
   };
+
+  const getArrayMetrics = (io) =>{
+    io.emit("arrayMetrics", saveData)
+  }
 
   var lat = 4.6948781;
   var lon = -74.1146918;
@@ -39,7 +51,7 @@ const getPosition = (io) =>{
     io.emit('prueba', payload)
 }
 
-module.exports = {getApiAndEmit, getPosition}
+module.exports = {getApiAndEmit, getPosition, getArrayMetrics}
 
 
 

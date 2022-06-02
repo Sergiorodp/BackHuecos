@@ -68,9 +68,9 @@ io.on('connection', (socket) => {
 
     console.log('a user connected');
 
-
-    const interval = setInterval(() => controllersSocket.getApiAndEmit(io), 10000)
-    const example2 = setInterval(() => controllersSocket.getPosition(io),10000)
+    setInterval(() => controllersSocket.getApiAndEmit(io), 10000)
+    setInterval(() => controllersSocket.getPosition(io),10000)
+    setInterval(() => controllersSocket.getArrayMetrics(io), 3000)
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
