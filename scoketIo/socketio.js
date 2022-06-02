@@ -1,13 +1,14 @@
 
 const getApiAndEmit = io => {
+
     const response = new Date()
 
     const res = [{
       name : 'velocidad',
-      value : response.getHours()
+      value : Math.random() * (120 - 10) + 10
     },{
       name : 'aceleracion',
-      value : response.getMinutes()
+      value : Math.random() * (30 - 1) + 1
     },{
       name : 'tiempo',
       value : response.getSeconds()
@@ -34,8 +35,6 @@ const getPosition = (io) =>{
         'lat' : lat,
         'lon' : lon
     }
-
-
 
     io.emit('prueba', payload)
 }
