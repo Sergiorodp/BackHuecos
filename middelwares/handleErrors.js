@@ -20,7 +20,11 @@ module.exports = (error, req, res, next) => {
             })
             break
         case 'UnauthorizedError' : 
-            res.writeHead( 301, { Location : `https://detector-huecos.herokuapp.com${api}/hueco`}).end()
+            // res.writeHead( 301, { Location : `https://detector-huecos.herokuapp.com${api}/hueco`}).end()
+            res.status(401).json({
+                succees : false,
+                message: error.message
+            })
             break       
         default :
             res.status(500).end()

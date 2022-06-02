@@ -8,6 +8,7 @@ const admin = {
         {url : /\/socket.io(.*)/, methods : ['GET','OPTIONS']},
         `${api}/users/login`,
         `${api}/users/register`,
+        `${api}/users/isValidToken`,
         `/`
     ]
 

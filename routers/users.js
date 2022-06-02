@@ -3,6 +3,7 @@ const User = require('../modules/user')
 const Token = require('../modules/token')
 const bcrypt = require('bcryptjs') // npm install bcryptjs
 const jwt = require('jsonwebtoken')
+const jwtexp  = require("express-jwt")
 
 const router = Router()
 
@@ -73,6 +74,13 @@ router.get('/get/bytkn', (req,res, next) => {
 
     })
     .catch( next )
+})
+
+router.get('/isValidToken',jwtexp({ secret: process.env.SecretSign, algorithms: ["HS256"] }), (req,res,next) => {
+    res.status(200).json({
+        success: true,
+        message : 'valid'
+    })
 })
 
 router.post('/login' , (req,res,next) => {

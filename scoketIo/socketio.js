@@ -5,10 +5,10 @@ const getApiAndEmit = io => {
 
     const res = [{
       name : 'velocidad',
-      value : Math.random() * (120 - 10) + 10
+      value : (Math.random() * (120 - 10) + 10).toFixed(2)
     },{
       name : 'aceleracion',
-      value : Math.random() * (30 - 1) + 1
+      value : (Math.random() * (30 - 1) + 1).toFixed(2)
     },{
       name : 'tiempo',
       value : response.getSeconds()
