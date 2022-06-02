@@ -17,4 +17,15 @@ router.get('/', (req, res, next) => {
 
 })
 
+router.get('/count', (req, res, next) => {
+    Hueco.find({})
+    .count()
+    .then(result => {
+        res.status(200).json({
+            success: true,
+            data : result
+        })
+    })
+})
+
 module.exports = router

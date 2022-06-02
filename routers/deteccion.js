@@ -42,6 +42,26 @@ router.get('/:id', (req, res, next) => {
 
 })
 
+router.get('/getByUser/:id', (req,res, next) => {
+    const { id } = req.params
+    Deteccion.find({usuario : id})
+    .populate('hueco')
+    .then( deteccion => {
+
+        if( deteccion === null) {
+            res.status(404).json({
+                result : 'No Found',
+                success : false
+            })
+        }else{
+            res.status(200).json({ result : deteccion ,
+            success : true})
+        }
+
+    })
+    .catch( next )
+})
+
 router.post(`/`,
     fileUpload({
         useTempFiles : true,
